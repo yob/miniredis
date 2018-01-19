@@ -153,11 +153,10 @@ func (db *RedisDB) stringIncr(k string, delta int) (int, error) {
 
 // change float key value
 func (db *RedisDB) stringIncrfloat(k string, delta *big.Float) (float64, error) {
-	v := big.NewFloat(0.0)
-	v.SetPrec(256)
+	v := newZero()
 	if sv, ok := db.stringKeys[k]; ok {
 		var err error
-		v, _, err = big.ParseFloat(sv, 0, 256, 0)
+		v, err = parseFloat(sv)
 		if err != nil {
 			return 0, ErrFloatValueError
 		}
@@ -337,12 +336,11 @@ func (db *RedisDB) hashIncr(key, field string, delta int) (int, error) {
 
 // hashIncrfloat changes float key value
 func (db *RedisDB) hashIncrfloat(key, field string, delta *big.Float) (float64, error) {
-	v := big.NewFloat(0.0)
-	v.SetPrec(256)
+	v := newZero()
 	if h, ok := db.hashKeys[key]; ok {
 		if f, ok := h[field]; ok {
 			var err error
-			v, _, err = big.ParseFloat(f, 0, 256, 0)
+			v, err = parseFloat(f)
 			if err != nil {
 				return 0, ErrFloatValueError
 			}
