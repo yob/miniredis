@@ -124,7 +124,7 @@ func blocking(
 	}
 }
 
-// formatFloat formats a float the way redis does (sort-of)
+// formatFloat formats a float the way redis does
 func formatFloat(v float64) string {
 	if math.IsInf(v, +1) {
 		return "inf"

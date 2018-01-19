@@ -3,6 +3,7 @@
 package miniredis
 
 import (
+	"math/big"
 	"strconv"
 	"strings"
 
@@ -457,9 +458,9 @@ func (m *Miniredis) cmdHincrbyfloat(c *server.Peer, cmd string, args []string) {
 		return
 	}
 
-	key, field, deltas := args[0], args[1], args[2]
+	key, field, deltaS := args[0], args[1], args[2]
 
-	delta, err := strconv.ParseFloat(deltas, 64)
+	delta, _, err := big.ParseFloat(deltaS, 0, 256, 0)
 	if err != nil {
 		setDirty(c)
 		c.WriteError(msgInvalidFloat)
