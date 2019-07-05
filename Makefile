@@ -10,3 +10,7 @@ testrace:
 
 int:
 	${MAKE} -C integration all
+
+miniredis: *.go cmd/*.go
+	go mod vendor
+	go build -mod=vendor -o $@ ./cmd

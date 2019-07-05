@@ -1,0 +1,15 @@
+#!/bin/bash -eu
+#
+# Operate in environment suitable for running go
+
+cd $(dirname $0)/..
+
+docker run \
+  -v `pwd`:/work:rw \
+  -w /work \
+  -i \
+  -p 6379:6379 \
+  --rm \
+  -t golang:1.12.6-stretch \
+  "${@-bash}" # default command to launch in the container
+
