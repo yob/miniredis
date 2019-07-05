@@ -1,2 +1,3 @@
 /integration/redis_src/
 *.swp
+vendor
